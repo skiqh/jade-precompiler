@@ -1,6 +1,6 @@
 {
     "name": "jade-precompiler",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "categories": ["build-tools"],
     "description": "Precompiles .jade HTML templates when building a package and attaches a compiled .html file",
     "preprocessors": {

@@ -14,14 +14,16 @@ function compileJade(project_path, filename, settings, callback) {
         }
         console.log('Compiling ' + utils.relpath(filename, project_path));
         jade = require('jade');
+        
+        
         require('fs').readFile(filename, 'utf8', function(err, str) {
           if (err) {
              return callback(err, null);
           }
-          fn = jade.compile(str, { pretty: true });
+          fn = jade.compile(str, { pretty: !(settings.jade && settings.jade.compress) });
           
-          res = fn( settings.jade.constants );
-          console.log(res);
+          res = fn( settings.jade.constants || {} );
+          
           callback(null, res);
           return
         });
