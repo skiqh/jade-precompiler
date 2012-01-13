@@ -3,6 +3,7 @@
     "version": "0.0.4",
     "categories": ["build-tools"],
     "description": "Precompiles .jade HTML templates when building a package and attaches a compiled .html file",
+    "url": "https://github.com/skiqh/jade-precompiler",
     "preprocessors": {
         "compile": "build/compile",
         "remove_attachments": "build/remove_attachments"
