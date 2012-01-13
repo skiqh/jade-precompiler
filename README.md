@@ -36,7 +36,7 @@ It is possible to pass an object to each of the jade files. Define it under the 
   "jade": {
     "compile": [ ... ],
     "constants": {
-      "tag": "development",
+      "environment": "dev",
       "author": {
         "name": "skiqh",
         "site": "https://github.com/skiqh/jade-precompiler"
@@ -61,7 +61,7 @@ the jade-preprocessor will yield
 ```html
 <div id="title">
   <h1>The infamous jade preprocessor for kanso</h1>
-  <span class="tag">development</span>
+  <span class="tag">dev</span>
 </div>
 
 <div id="contact">
