@@ -23,13 +23,31 @@ to `kanso.json` and put in the files you want to process.
   }
 ```
 
-> Running `kanso push` will compile `pages/about.jade` to 
+> Running `kanso push` will compile `pages/about.jade` to
 `pages/about.html` and upload it to `_attachments/pages/about.jade`.
+
+Alternately you can compile all jade files under a directory.
+
+```javascript
+  ...
+  "jade": {
+    "compile": [ "pages", ... ]
+  }
+```
+
+Or all jade files anywhere in the kanso project.
+
+```javascript
+  ...
+  "jade": {
+    "compile": true
+  }
+```
 
 
 ###Parameter objects
 It is possible to pass an object to each of the jade files. Define it under the key `constants`
-__The `constants` section will fade out in future releases. Versions from 0.1.0 
+__The `constants` section will fade out in future releases. Versions from 0.1.0
 and up will not pass the `constants` object to the jade templates. Instead, the whole
 `kanso.json` will be made available to the templates. -- see below.__
 
@@ -58,7 +76,7 @@ Used with a template containing these lines,
   a(href='#{author.site}')= author.name
 ```
 
-the jade-preprocessor will yield 
+the jade-preprocessor will yield
 
 ```html
 <div id="title">
@@ -72,8 +90,8 @@ the jade-preprocessor will yield
 ```
 
 If you ommit the `constants` section, the jade-precompiler will pass the whole settings object
-to your templates. This whole thing will come in very handy once kanso is able to override the 
-entries in `kanso.js` with values from the `.kansorc`-environment you chose at the commandline, 
+to your templates. This whole thing will come in very handy once kanso is able to override the
+entries in `kanso.js` with values from the `.kansorc`-environment you chose at the commandline,
 like `kanso push production`. (see <https://github.com/kanso/kanso/issues/353> for detals.)
 
 
