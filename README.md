@@ -27,11 +27,12 @@ To tell the precompiler which jade files to transform, add a section called
 `pages/about.html` and upload it to `_attachments/pages/about.jade`.
 
 The `compile` property can be: 
-* `"subfolder"` the name of a single folder containing files to compile,
+* `"subfolder"` or `file.jade` the name of a single file or a folder 
+containing files to compile,
 * `[ "folderA", "sub/folderB", "path/to/file.jade"]` a list of files or 
 folders to compile,
-* `true` Tell the compiler to process all `.jade` files anywhere in the kanso 
-project.
+* `true` to instruct the compiler to process all `.jade` files anywhere in the 
+kanso project.
 
 
 
