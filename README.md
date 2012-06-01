@@ -51,21 +51,38 @@ And since kanso is able to overwrite these settings depending on your
 `kanso push` target in `.kansorc`, your templates can take those into account, 
 too.
 
-Given the following `.kansorc`:
+Given we have these files:
+`kanso.json`
+```javascript
+  { "name": "myapp"
+  , "version": "0.0.1"
+  , "description": "jade-precompiler show off"
 
+  , "dependencies": 
+    { "jade-precompiler": null
+    }
+
+  , "jade": 
+    { "compile": [ "index.jade" ]
+    }
+
+  , "use_cdn": true
+  }
+```
+
+`.kansorc`
 ```javascript
   exports.env = 
-      // the default env will be used when you just do "kanso push"
       { 'default': 
         { db: 'http://127.0.0.1:80/myapp' 
         , use_cdn: false
-        , name: "internal dev"
         }
-      // this one will be used when you do "kanso push production"
+
       , 'production': 
         { db: 'http://user:p4ss@doma.in:5984/myapp'
-        , use_cdn: true
-        , name: "doma.in portal"
+        , overrides:
+          { name: "My Jade Showoff App"
+          }
         }
       }
 
@@ -97,7 +114,7 @@ on `kanso push` the jade-preprocessor will yield
 <!DOCTYPE html>
   <html lang="en">
     <head>
-      <title>internal dev</title>
+      <title>myapp</title>
     </head>
     <body>
       <h1>Welcome</h1>
@@ -116,7 +133,7 @@ on `kanso push production` however, it will produce
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>doma.in portal</title>
+    <title>My Jade Showoff App</title>
   </head>
   <body>
     <h1>Welcome</h1>
@@ -149,14 +166,12 @@ compress flag according to your push target like so:
 
 ```javascript
   exports.env = 
-      // the default env will be used when you just do "kanso push"
       { 'default': 
         { db: 'http://127.0.0.1:80/myapp' 
         , use_cdn: false
-        , name: "internal dev"
         , overrides: 
           { jade:
-            { compress: false   // never compress for this environment
+            { compress: false         // never compress for this environment
             }
           }
         }
@@ -164,11 +179,11 @@ compress flag according to your push target like so:
       // this one will be used when you do "kanso push production"
       , 'production': 
         { db: 'http://user:p4ss@doma.in:5984/myapp'
-        , use_cdn: true
-        , name: "doma.in portal"
+
         , overrides: 
-          { jade:
-            { compress: true    // always compress for this environment
+          { name: "My Jade Showoff App"
+          , jade:
+            { compress: true          // always compress for this environment
             }
           }
         }
