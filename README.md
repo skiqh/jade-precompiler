@@ -26,32 +26,23 @@ To tell the precompiler which jade files to transform, add a section called
 > Running `kanso push` will compile `pages/about.jade` to
 `pages/about.html` and upload it to `_attachments/pages/about.jade`.
 
-Alternately you can compile all jade files under a directory.
+The `compile` property can be: 
+* `"subfolder"` the name of a single folder containing files to compile,
+* `[ "folder1", "folder2", "path/to/file.jade"]` a list of files or folders to 
+compile,
+* `true` Tell the compiler to process all `.jade` files anywhere in the kanso 
+project.
 
-```javascript
-  ...
-  "jade": {
-    "compile": [ "pages", ... ]
-  }
-```
-
-Or all jade files anywhere in the kanso project.
-
-```javascript
-  ...
-  "jade": {
-    "compile": true
-  }
-```
 
 
 ###Parameters
 The settings defined in `kanso.json` will be made available to the templates.
 And since kanso is able to overwrite these settings depending on your 
-`kanso push` target in `.kansorc`, your templates can take those into account, 
-too.
+`kanso push` target in `.kansorc`, your templates can take the target into 
+account, too.
 
 Given we have these files:
+
 `kanso.json`
 ```javascript
   { "name": "myapp"
@@ -75,7 +66,9 @@ Given we have these files:
   exports.env = 
       { 'default': 
         { db: 'http://127.0.0.1:80/myapp' 
-        , use_cdn: false
+        , overrides:
+          { use_cdn: false
+          }
         }
 
       , 'production': 
@@ -168,9 +161,9 @@ compress flag according to your push target like so:
   exports.env = 
       { 'default': 
         { db: 'http://127.0.0.1:80/myapp' 
-        , use_cdn: false
         , overrides: 
-          { jade:
+          { use_cdn: false
+          , jade:
             { compress: false         // never compress for this environment
             }
           }
