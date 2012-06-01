@@ -28,8 +28,8 @@ To tell the precompiler which jade files to transform, add a section called
 
 The `compile` property can be: 
 * `"subfolder"` the name of a single folder containing files to compile,
-* `[ "folder1", "folder2", "path/to/file.jade"]` a list of files or folders to 
-compile,
+* `[ "folderA", "sub/folderB", "path/to/file.jade"]` a list of files or 
+folders to compile,
 * `true` Tell the compiler to process all `.jade` files anywhere in the kanso 
 project.
 
@@ -169,7 +169,7 @@ compress flag according to your push target like so:
           }
         }
         }
-      // this one will be used when you do "kanso push production"
+
       , 'production': 
         { db: 'http://user:p4ss@doma.in:5984/myapp'
 
