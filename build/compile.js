@@ -2,6 +2,7 @@ var jade = require('jade'),
     async = require('async'),
     utils = require('kanso-utils/utils'),
     spawn = require('child_process').spawn,
+    attachments = require('kanso-utils/attachments'),
     path = require('path');
 
 
@@ -98,10 +99,11 @@ module.exports = function (root, path, settings, doc, callback) {
                   if (err) {
                       return cb(err);
                   }
-                  doc._attachments[name] = {
-                      content_type: 'text/html',
-                      data: new Buffer(css).toString('base64')
-                  };
+                  attachments.add(doc, name, name, new Buffer(css));
+                  //doc._attachments[name] = {
+                      //content_type: 'text/html',
+                      //data: new Buffer(css).toString('base64')
+                  //};
                   cb();
               });
           },
