@@ -3,13 +3,14 @@ var jade = require('jade'),
     utils = require('kanso-utils/utils'),
     spawn = require('child_process').spawn,
     attachments = require('kanso-utils/attachments'),
+    fs = require('fs'),
     path = require('path');
 
 
 function compileJade(project_path, filename, settings, callback) {
     // we get a rather cryptic error when trying to compile a file that doesn't
     // exist, so check early for that and report something sensible
-    path.exists(filename, function (exists) {
+    fs.exists(filename, function (exists) {
         if (!exists) {
             return callback(new Error('File does not exist: ' + filename));
         }
