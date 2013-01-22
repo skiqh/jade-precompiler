@@ -2,13 +2,15 @@ var jade = require('jade'),
     async = require('async'),
     utils = require('kanso-utils/utils'),
     spawn = require('child_process').spawn,
+    attachments = require('kanso-utils/attachments'),
+    fs = require('fs'),
     path = require('path');
 
 
 function compileJade(project_path, filename, settings, callback) {
     // we get a rather cryptic error when trying to compile a file that doesn't
     // exist, so check early for that and report something sensible
-    path.exists(filename, function (exists) {
+    fs.exists(filename, function (exists) {
         if (!exists) {
             return callback(new Error('File does not exist: ' + filename));
         }
@@ -19,7 +21,7 @@ function compileJade(project_path, filename, settings, callback) {
           if (err) {
              return callback(err, null);
           }
-          fn = jade.compile(str, { pretty: !(settings.jade && settings.jade.compress) });
+          fn = jade.compile(str, { pretty: !(settings.jade && settings.jade.compress), filename: filename });
           res = fn( settings.jade.constants || settings || {} );
 
           callback(null, res);
@@ -43,6 +45,7 @@ function collectPaths(paths, root, callback) {
         if (/^\.[^.]|~$/.test(p)) { // ignore hidden files
             cb();
         } else {
+            p = path.resolve(root, p); //resolve path before doing stat
             fs.stat(p, function(err, stats) {
                 if (err) {
                     if (err.code === 'ENOENT') {
@@ -51,7 +54,6 @@ function collectPaths(paths, root, callback) {
                         cb(err);
                     }
                 } else {
-                    p = path.resolve(root, p);
                     if (stats.isDirectory()) {
                         fs.readdir(p, function(err, files) {
                             if (err) {
@@ -98,10 +100,11 @@ module.exports = function (root, path, settings, doc, callback) {
                   if (err) {
                       return cb(err);
                   }
-                  doc._attachments[name] = {
-                      content_type: 'text/html',
-                      data: new Buffer(css).toString('base64')
-                  };
+                  attachments.add(doc, name, name, new Buffer(css));
+                  //doc._attachments[name] = {
+                      //content_type: 'text/html',
+                      //data: new Buffer(css).toString('base64')
+                  //};
                   cb();
               });
           },
