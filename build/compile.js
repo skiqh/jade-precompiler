@@ -21,7 +21,7 @@ function compileJade(project_path, filename, settings, callback) {
           if (err) {
              return callback(err, null);
           }
-          fn = jade.compile(str, { pretty: !(settings.jade && settings.jade.compress) });
+          fn = jade.compile(str, { pretty: !(settings.jade && settings.jade.compress), filename: filename });
           res = fn( settings.jade.constants || settings || {} );
 
           callback(null, res);
