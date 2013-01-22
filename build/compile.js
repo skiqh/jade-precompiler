@@ -45,6 +45,7 @@ function collectPaths(paths, root, callback) {
         if (/^\.[^.]|~$/.test(p)) { // ignore hidden files
             cb();
         } else {
+            p = path.resolve(root, p); //resolve path before doing stat
             fs.stat(p, function(err, stats) {
                 if (err) {
                     if (err.code === 'ENOENT') {
@@ -53,7 +54,6 @@ function collectPaths(paths, root, callback) {
                         cb(err);
                     }
                 } else {
-                    p = path.resolve(root, p);
                     if (stats.isDirectory()) {
                         fs.readdir(p, function(err, files) {
                             if (err) {
