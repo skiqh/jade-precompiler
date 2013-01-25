@@ -100,7 +100,11 @@ module.exports = function (root, path, settings, doc, callback) {
                   if (err) {
                       return cb(err);
                   }
-                  attachments.add(doc, name, name, new Buffer(css));
+                  var ddoc_name=name;
+                  (settings.jade.rewrites || []).forEach(function(r) {
+                    ddoc_name=ddoc_name.replace(new RegExp(r[0]), r[1]);
+                  });
+                  attachments.add(doc, ddoc_name, name, new Buffer(css));
                   //doc._attachments[name] = {
                       //content_type: 'text/html',
                       //data: new Buffer(css).toString('base64')

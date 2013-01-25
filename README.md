@@ -199,3 +199,26 @@ inside a directory also added as static files), by adding the
     "remove_from_attachments": true
   }
 ```
+
+### Rewrite paths
+
+If you use a directory structure for your jade templates that doesn't 
+fit whats expected you can use rewrites.
+It could be, for example, that you need to strip out the first folder
+name.
+The rewrites list should be a list with find,replace pairs where the
+find string will be treaded as a regular expression.
+
+```javascript
+   ...
+   "jade": {
+     "compile": [ "pages/index.jade" ],
+     "rewrites": [
+       [ "pages/", "" ]
+     ]
+   }
+```
+
+This would remove the leading "pages/" from the compiled files so
+you end up with just "index.html" instead of "pages/index.html"
+
