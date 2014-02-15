@@ -45,7 +45,9 @@ function collectPaths(paths, root, callback) {
         if (/^\.[^.]|~$/.test(p)) { // ignore hidden files
             cb();
         } else {
-            p = path.resolve(root, p); //resolve path before doing stat
+            if(typeof root == 'string') // intercept recursion, where root is a path
+                p = path.resolve(root, p); //resolve path before doing stat
+
             fs.stat(p, function(err, stats) {
                 if (err) {
                     if (err.code === 'ENOENT') {
